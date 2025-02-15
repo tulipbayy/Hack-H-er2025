@@ -5,8 +5,6 @@ import config
 app = Flask(__name__, template_folder="templates")
 
 # Set your OpenAI API Key here
-OPENAI_API_KEY = "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"
-
 @app.route("/")
 def index():
     return render_template("index.html")
