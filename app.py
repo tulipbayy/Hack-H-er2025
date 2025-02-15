@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import openai
+import config 
 
 app = Flask(__name__, template_folder="templates")
 
@@ -19,7 +20,7 @@ def get_etymology():
     prompt = f"Please give the linguistic and etymological roots of the word '{word}'."
 
     try:
-        client = openai.OpenAI(api_key=OPENAI_API_KEY)
+        client = openai.OpenAI(api_key=config.OPENAI_API_KEY)
         response = response = client.chat.completions.create(
             model="gpt-4",
             messages=[
