@@ -1,0 +1,183 @@
+{
+  "name": "Indo-European",
+  "children": [
+    {
+      "name": "Anatolian (extinct)",
+      "children": [
+        { "name": "Hittite" },
+        { "name": "Luwian" },
+        { "name": "Lycian" }
+      ]
+    },
+    {
+      "name": "Indo-Iranian",
+      "children": [
+        {
+          "name": "Indic (Indo-Aryan)",
+          "children": [
+            { "name": "Sanskrit (classical)" },
+            { "name": "Hindi" },
+            { "name": "Urdu" },
+            { "name": "Bengali" },
+            { "name": "Punjabi" },
+            { "name": "Marathi" },
+            { "name": "Gujarati" },
+            { "name": "Sindhi" },
+            { "name": "Nepali" },
+            { "name": "Sinhalese" },
+            { "name": "Romani" }
+            /* ... and many others */
+          ]
+        },
+        {
+          "name": "Iranian",
+          "children": [
+            { "name": "Persian (Farsi)" },
+            { "name": "Dari" },
+            { "name": "Tajik" },
+            { "name": "Kurdish" },
+            { "name": "Pashto" },
+            { "name": "Balochi" }
+            /* ... etc. */
+          ]
+        },
+        {
+          "name": "Nuristani",
+          "children": [
+            { "name": "Kati" },
+            { "name": "Askunu" }
+            /* ... smaller group in NE Afghanistan */
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Balto-Slavic",
+      "children": [
+        {
+          "name": "Baltic",
+          "children": [
+            { "name": "Lithuanian" },
+            { "name": "Latvian" },
+            { "name": "Old Prussian (extinct)" }
+          ]
+        },
+        {
+          "name": "Slavic",
+          "children": [
+            {
+              "name": "East Slavic",
+              "children": [
+                { "name": "Russian" },
+                { "name": "Ukrainian" },
+                { "name": "Belarusian" }
+              ]
+            },
+            {
+              "name": "West Slavic",
+              "children": [
+                { "name": "Polish" },
+                { "name": "Czech" },
+                { "name": "Slovak" },
+                { "name": "Sorbian languages" }
+              ]
+            },
+            {
+              "name": "South Slavic",
+              "children": [
+                { "name": "Bulgarian" },
+                { "name": "Macedonian" },
+                { "name": "Serbo-Croatian (BCS)" },
+                { "name": "Slovenian" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Germanic",
+      "children": [
+        {
+          "name": "North Germanic (Nordic)",
+          "children": [
+            { "name": "Swedish" },
+            { "name": "Norwegian" },
+            { "name": "Danish" },
+            { "name": "Icelandic" },
+            { "name": "Faroese" }
+          ]
+        },
+        {
+          "name": "West Germanic",
+          "children": [
+            { "name": "English" },
+            { "name": "German" },
+            { "name": "Dutch" },
+            { "name": "Afrikaans" },
+            { "name": "Frisian" },
+            { "name": "Yiddish" }
+          ]
+        },
+        {
+          "name": "East Germanic (extinct)",
+          "children": [
+            { "name": "Gothic" },
+            { "name": "Vandalic (extinct)" }
+            /* ... etc. */
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Italic",
+      "children": [
+        {
+          "name": "Latino-Faliscan",
+          "children": [
+            {
+              "name": "Latin",
+              "children": [
+                {
+                  "name": "Romance",
+                  "children": [
+                    { "name": "Italian" },
+                    { "name": "French" },
+                    { "name": "Spanish" },
+                    { "name": "Portuguese" },
+                    { "name": "Romanian" },
+                    { "name": "Catalan" },
+                    { "name": "Galician" }
+                    /* ... others */
+                  ]
+                }
+              ]
+            }
+            /* Could add Faliscan, Umbrian, Oscan (older Italic languages) */
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Celtic",
+      "children": [
+        {
+          "name": "Insular Celtic",
+          "children": [
+            { "name": "Irish Gaelic" },
+            { "name": "Scottish Gaelic" },
+            { "name": "Manx" },
+            { "name": "Welsh" },
+            { "name": "Breton" },
+            { "name": "Cornish" }
+          ]
+        }
+        /* Continental Celtic is largely extinct (Gaulish, etc.) */
+      ]
+    },
+    { "name": "Greek (Hellenic)" },
+    { "name": "Albanian" },
+    { "name": "Armenian" }
+    /* You can add more extinct branches like Tocharian, and deeper sub-branches for each modern language. */
+  ]
+}

@@ -18,7 +18,7 @@ def get_etymology():
 
     try:
         client = openai.OpenAI(api_key=config.OPENAI_API_KEY)
-        response = response = client.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a linguistic and etymology expert."},

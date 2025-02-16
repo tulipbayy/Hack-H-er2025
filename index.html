@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indo-European Tree + Etymology Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    /* Style for the search area */
+    #searchArea {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #output {
+      margin-top: 10px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      display: none;
+    }
+    /* Container for the interactive tree */
+    #network {
+      width: 100%;
+      height: 70vh;
+      border: 1px solid #ccc;
+      position: relative;
+    }
+    .vis-network canvas {
+      background-color: transparent !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Indo-European Language Family Tree &amp; Etymology Explorer</h1>
+
+  <!-- Search area from GitHub code -->
+  <div id="searchArea">
+    <p>Enter a word to explore its etymological roots.</p>
+    <input type="text" id="wordInput" placeholder="Enter a word...">
+    <button id="searchButton">Explore</button>
+    <div id="output"></div>
+  </div>
+
+  <!-- Container for the interactive tree -->
+  <div id="network"></div>
+
+  <!-- Include vis.js -->
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  <script>
+    // ================================
+    // Part 1: Etymology Search Functionality
+    // ================================
+
+    async function fetchEtymology() {
+      const word = document.getElementById("wordInput").value.trim();
+      if (!word) {
+        alert("Please enter a word.");
+        return;
+      }
+
+      document.getElementById("output").style.display = "block";
+      document.getElementById("output").innerText = "Fetching information...";
+
+      try {
+        const response = await fetch("/get_etymology", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ word: word })
+        });
+        const data = await response.json();
+
+        if (data.error) {
+          document.getElementById("output").innerText = "Error: " + data.error;
+        } else {
+          document.getElementById("output").innerHTML = "<strong>Etymology:</strong><br>" + data.etymology;
+          // Optionally, update/highlight the tree (see note below)
+          highlightTreeNode(word);
+        }
+      } catch (err) {
+        console.error("Error fetching etymology:", err);
+        document.getElementById("output").innerText = "Error fetching etymology.";
+      }
+    }
+
+    document.getElementById("searchButton").addEventListener("click", fetchEtymology);
+
+    // ================================
+    // Part 2: Interactive Tree with vis.js
+    // ================================
+
+    // Create a background image for the tree
+    const bgImage = new Image();
+    bgImage.src = "https://i.postimg.cc/TPtpF0NJ/etymology.jpg";
+    bgImage.onload = () => console.log("Background image loaded!");
+
+    // Hierarchical JSON data for the tree (simplified example)
+    const rawData = {
+      "name": "Indo-European",
+      "children": [
+        {
+          "name": "Indo-Iranian",
+          "children": [
+            {
+              "name": "Indic (Indo-Aryan)",
+              "children": [
+                { "name": "Sanskrit (classical)" },
+                { "name": "Hindi" },
+                { "name": "Urdu" },
+                { "name": "Bengali" },
+                { "name": "Punjabi" }
+              ]
+            },
+            {
+              "name": "Iranian",
+              "children": [
+                { "name": "Persian (Farsi)" },
+                { "name": "Dari" },
+                { "name": "Tajik" },
+                { "name": "Kurdish" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Balto-Slavic",
+          "children": [
+            {
+              "name": "Baltic",
+              "children": [
+                { "name": "Lithuanian" },
+                { "name": "Latvian" },
+                { "name": "Old Prussian (extinct)" }
+              ]
+            },
+            {
+              "name": "Slavic",
+              "children": [
+                {
+                  "name": "East Slavic",
+                  "children": [
+                    { "name": "Russian" },
+                    { "name": "Ukrainian" },
+                    { "name": "Belarusian" }
+                  ]
+                },
+                {
+                  "name": "West Slavic",
+                  "children": [
+                    { "name": "Polish" },
+                    { "name": "Czech" },
+                    { "name": "Slovak" }
+                  ]
+                },
+                {
+                  "name": "South Slavic",
+                  "children": [
+                    { "name": "Bulgarian" },
+                    { "name": "Macedonian" },
+                    { "name": "Serbo-Croatian (BCS)" },
+                    { "name": "Slovenian" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Germanic",
+          "children": [
+            {
+              "name": "North Germanic (Nordic)",
+              "children": [
+                { "name": "Swedish" },
+                { "name": "Norwegian" },
+                { "name": "Danish" }
+              ]
+            },
+            {
+              "name": "West Germanic",
+              "children": [
+                { "name": "English" },
+                { "name": "German" },
+                { "name": "Dutch" },
+                { "name": "Afrikaans" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Italic",
+          "children": [
+            {
+              "name": "Latino-Faliscan",
+              "children": [
+                {
+                  "name": "Latin",
+                  "children": [
+                    {
+                      "name": "Romance",
+                      "children": [
+                        { "name": "Italian" },
+                        { "name": "French" },
+                        { "name": "Spanish" },
+                        { "name": "Portuguese" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "name": "Greek (Hellenic)" },
+        { "name": "Albanian" },
+        { "name": "Armenian" }
+      ]
+    };
+
+    // Flatten the hierarchical JSON into nodes and edges arrays
+    let nodeId = 0;
+    const nodes = [];
+    const edges = [];
+    function traverseTree(node, parentId = null) {
+      nodeId++;
+      const currentId = nodeId;
+      nodes.push({ id: currentId, label: node.name });
+      if (parentId !== null) {
+        edges.push({ from: parentId, to: currentId });
+      }
+      if (node.children && node.children.length > 0) {
+        node.children.forEach(child => traverseTree(child, currentId));
+      }
+    }
+    traverseTree(rawData);
+
+    // Create the vis.js network
+    const container = document.getElementById("network");
+    const data = {
+      nodes: new vis.DataSet(nodes),
+      edges: new vis.DataSet(edges)
+    };
+    const options = {
+      layout: {
+        hierarchical: {
+          direction: "DU",
+          sortMethod: "directed",
+          nodeSpacing: 290,
+          levelSeparation: 500
+        }
+      },
+      physics: false,
+      edges: { arrows: "to" },
+      nodes: {
+        color: "pink",
+        shape: "ellipse",
+        widthConstraint: { maximum: 90 },
+        font: { size: 40 }
+      },
+      interaction: {
+        dragNodes: true,
+        zoomView: true,
+        dragView: true
+      }
+    };
+    const network = new vis.Network(container, data, options);
+
+    // Draw the background image on the canvas so it pans/zooms with the tree
+    network.on("beforeDrawing", function(ctx) {
+      const scale = network.getScale();
+      const translation = network.getViewPosition();
+      ctx.save();
+      ctx.translate(translation.x, translation.y);
+      ctx.scale(scale, scale);
+       if (bgImage.complete) {
+    // Example: center the image at (0,0)
+      const scaleFactor = 100; 
+      ctx.drawImage(
+        bgImage,
+        // Place the top-left corner so it centers the image:
+        -(bgImage.width * scaleFactor) / 2,
+        -(bgImage.height * scaleFactor) / 2,
+        bgImage.width * scaleFactor,
+        bgImage.height * scaleFactor)
+    }
+      ctx.restore();
+    });
+
+    // ================================
+    // (Optional) Highlight or update tree node based on search word.
+    function highlightTreeNode(word) {
+      // Convert to lower-case for case-insensitive matching.
+      const searchTerm = word.toLowerCase();
+      // Get all nodes, and update those that match
+      nodes.get().forEach(node => {
+        if (node.label.toLowerCase().includes(searchTerm)) {
+          nodes.update({ id: node.id, color: { background: "yellow", border: "orange" } });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
