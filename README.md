@@ -1,48 +1,40 @@
-# Hello website!
+## Inspiration
+We’ve always been fascinated by how words connect us across time and cultures. Tracing the origins of a single word can reveal hidden stories and linguistic influences from centuries ago. We wanted to create a tool that merges **data visualization** and **AI-powered etymology** to bring those hidden stories to life in a fun, interactive way.
 
-This is a basic HTML starter project you can build on however you like. No need to save. While you develop your site, your changes will happen ✨ immediately in the preview window. On the left you'll see the files that make up your site, including HTML, JavaScript, and CSS. You can upload assets like images or audio in `assets`. The rest is up to you and your imagination. 🦄
+## What It Does
+**Indo-European Language Family Tree & Etymology Explorer** is an interactive web application that lets you:
+1. **Visualize** the Indo-European language family in a dynamic tree.
+2. **Pan and zoom** around the tree to discover different language branches.
+3. **Search** for a specific word’s etymology using an AI (OpenAI) backend, which returns detailed linguistic roots.
+4. **Highlight** or explore how the queried word might connect to the tree’s branches.
 
-_Last updated: 28 Feb 2023_
+## How We Built It
+1. **Backend (Python + Flask)**: Handles requests to `/get_etymology`, uses OpenAI’s GPT-4 to generate etymological explanations.
+2. **Frontend (HTML/CSS/JavaScript)**: 
+   - **vis.js** renders the hierarchical tree with pan/zoom functionality.
+   - A **background image** is drawn on the same canvas to give it a “tree trunk and leaves” aesthetic.
+   - **Search** interface calls the Flask endpoint, displays results, and optionally highlights relevant nodes.
+3. **Data Flattening**: We used a small hierarchical JSON of Indo-European branches, which we converted into nodes/edges for vis.js.
 
-## What's in this project?
+## Challenges We Ran Into
+- **Aligning the tree**: Positioning the large background image so it matches the branching structure took trial and error with canvas transforms.
+- **Merging AI calls**: Ensuring the backend route `/get_etymology` returned consistent data and handling errors from OpenAI.
+- **Performance & layout**: Balancing node spacing, hierarchical layout, and large fonts so the tree remained readable.
 
-← `README.md`: That's this file, where you can tell people what your cool website does and how you built it.
+## Accomplishments We’re Proud Of
+- Successfully **integrated** an AI-based etymology lookup with a real-time **interactive tree** visualization.
+- Created a **visually appealing** interface that encourages exploration and learning about linguistic roots.
+- Overcame **coordinate system** headaches to make the background “move” in sync with the language nodes.
 
-← `index.html`: This is the main web page for your site. The HTML defines the structure and content of the page using _elements_. You'll see references in the HTML to the JS and CSS files. Try clicking the image in the center of the page!
+## What We Learned
+- How to **draw images** on a vis.js canvas and apply the same transforms (scale, translate) as the node layout.
+- The **importance of backend endpoints** (Flask) and structured JSON responses for a smooth frontend experience.
+- Fine-tuning prompts for OpenAI to get **concise yet informative** linguistic explanations.
 
-← `style.css`: CSS files add styling rules to your content. The CSS applies styles to the elements in your HTML page. The style rules also make the image move when you click it.
+## What’s Next
+- **Expand** the data: Include more branches, extinct languages, or additional language families.
+- **Deeper AI** integration: Provide phonological evolution or morphological analysis with more advanced prompts.
+- **User contributions**: Let people add words or personal notes to the tree, building a crowdsourced linguistic map.
+- **Timeline layering**: Visualize how languages diverged over centuries, possibly layering historical events.
 
-← `script.js`: If you're feeling fancy you can add interactivity to your site with JavaScript. The code in the JavaScript file runs when the page loads, and when the visitor clicks the button you can add using the code in the TODO.
-
-Open each file and check out the comments (in gray) for more info.
-
-## Try this next 🏗️
-
-Take a look in `TODO.md` for next steps you can try out in your new site!
-
-___Want a minimal version of this project to build your own website? Check out [Blank Website](https://glitch.com/edit/#!/remix/glitch-blank-website)!___
-
-## Ready to share your site?
-
-Add these meta tags for SEO and social sharing between your page `<head></head>` tags, changing the values for your site:
-
-```
-<link rel="canonical" href="https://glitch-hello-website.glitch.me/" />
-<meta name="description" content="A simple website, built with Glitch. Remix it to get your own."/>
-<meta name="robots" content="index,follow" />
-<meta property="og:title" content="Hello World!" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
-<meta property="og:description" content="A simple website, built with Glitch. Remix it to get your own."/>
-<meta property="og:image" content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147"/>
-<meta name="twitter:card" content="summary" />
-```
-
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
-
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.
+We hope this project inspires curiosity about the words we use every day and the rich tapestry of languages that shaped them!
